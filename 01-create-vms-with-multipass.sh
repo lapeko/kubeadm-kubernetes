@@ -1,11 +1,21 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Install multipass on Ubuntu
-sudo snap install multipass
+# Check if multipass is installed
+if ! command -v multipass &> /dev/null
+then
+    echo "Multipass not found, installing..."
+    sudo snap install multipass
+else
+    echo "Multipass is already installed."
+fi
 
-# Install master node. Required CPUs: 2, Memory: 2GB
-multipass launch --cpus 2 --memory 2048M --name master
+# Create master node
+echo "Launching master node..."
+multipass launch --cpus 2 --memory 2048M --disk 10G --name master
 
-# Install 2 worker nodes with required Memory: 2GB per machine
-multipass launch --memory 2048M --name node01
-multipass launch --memory 2048M --name node02
+# Create worker nodes
+echo "Launching worker1 and worker2..."
+multipass launch --memory 2048M --name worker1
+multipass launch --memory 2048M --name worker2
+
+echo "Cluster VMs are launched!"
