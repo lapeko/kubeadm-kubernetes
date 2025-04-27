@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source ./vars.sh
+
 # Check if multipass is installed
 if ! command -v multipass &> /dev/null
 then
@@ -10,12 +12,13 @@ else
 fi
 
 # Create master node
-echo "Launching master node..."
-multipass launch --cpus 2 --memory 2048M --disk 10G --name master
+echo "Launching $MASTER_NODE node..."
+multipass launch --cpus 2 --memory 2048M --disk 10G --name "$MASTER_NODE"
 
 # Create worker nodes
-echo "Launching worker1 and worker2..."
-multipass launch --memory 2048M --name worker1
-multipass launch --memory 2048M --name worker2
+for node in "${WORKER_NODES[@]}"; do
+  echo "Launching $node node..."
+  multipass launch --memory 2048M --name "$node"
+done
 
 echo "Cluster VMs are launched!"
