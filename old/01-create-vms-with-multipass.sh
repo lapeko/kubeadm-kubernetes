@@ -30,14 +30,11 @@ for NODE in "${NODES[@]}"; do
   HOSTS+="${NODE_IPS["$NODE"]} $NODE"$'\n'
 done
 
-#HOSTS_TEMPLATE=/etc/cloud/templates/hosts.debian.tmpl
 for NODE in "${NODES[@]}"; do
   echo "$HOSTS" | multipass exec "$NODE" -- sudo tee "/etc/hosts" > /dev/null 2>&1
-#  multipass exec "$NODE" -- bash -c "sudo cp $HOSTS_TEMPLATE /etc/hosts" > /dev/null 2>&1
   multipass exec "$NODE" -- bash -c "sudo touch /etc/cloud/cloud-init.disabled" > /dev/null 2>&1
 done
 echo "127.0.0.1 kubernetes.default.svc.cluster.local kubernetes.default kubernetes" | multipass exec "$MASTER_NODE" -- sudo tee -a "/etc/hosts" > /dev/null 2>&1
-#multipass exec "$MASTER_NODE" -- bash -c "sudo cp $HOSTS_TEMPLATE /etc/hosts" > /dev/null 2>&1
 
 for NODE in "${NODES[@]}"; do
   multipass exec "$NODE" -- sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null 2>&1 &
