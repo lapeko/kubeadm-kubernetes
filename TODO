@@ -20,3 +20,60 @@
         done
 
 # Make terminal more informative (spinner, status)
+
+# Ideas for further implementation
+    1. Multi-Platform Support
+        Support for Linux (Debian/Ubuntu, RHEL/CentOS/Fedora).
+        Support for Windows via WSL2.
+        Native MacOS support.
+        Auto-detection of the operating system and environment.
+
+    2. Flexible CNI Selection
+        Let the user choose between Flannel, Calico, or Cilium during cluster setup.
+        Auto-configure the correct --pod-network-cidr based on the CNI.
+        Add options for custom CNI plugin URLs.
+
+    3. Cluster Topology Configuration
+        Allow setting the number of master nodes and worker nodes.
+        Option for HA (High Availability) cluster setup in the future.
+        Flexible node naming (not only master, worker1, worker2).
+
+    4. Automatic Health Checking
+        Validate the health of:
+            kubelet
+            containerd
+            kube-apiserver
+            kube-controller-manager
+            kube-scheduler
+            Retry logic for unstable startups.
+
+    5. Reset and Reinstall
+        Easy make reset or CLI reset command.
+        Full cleanup (remove VMs, reset network settings, clean cluster state).
+
+    6. Easy Upgrades
+        Add upgrade scripts to migrate Kubernetes cluster versions.
+        Example: Upgrade from v1.32.0 to v1.33.0 automatically.
+
+    7. Cluster Templates
+        Predefined templates for typical setups:
+        Single-master
+        Multi-master
+        Development cluster
+        Performance testing cluster
+
+    8. Optional Local Registry
+        Spin up a local Docker registry inside the cluster for fast image pulls.
+        Useful for development environments.
+
+    9. Simple Web UI (Far Future)
+        Build a simple lightweight Web UI to:
+        Create a cluster
+        View node statuses
+        Delete cluster
+        Use something like Go + basic frontend (React, Svelte, etc.).
+
+    10. Full Go-based CLI
+        Rewrite core logic in Go.
+        Single binary executable for Linux, MacOS, and Windows.
+        No external dependencies (no need to install Go, Python, NodeJS, etc.).

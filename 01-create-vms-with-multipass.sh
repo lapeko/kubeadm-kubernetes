@@ -13,7 +13,7 @@ fi
 
 # Create master node
 echo "Launching $MASTER_NODE node..."
-multipass launch --cpus 2 --memory 2048M --disk 10G --name "$MASTER_NODE"
+multipass launch --cpus 4 --memory 8G --disk 30G --name "$MASTER_NODE"
 
 # Create worker nodes
 for node in "${WORKER_NODES[@]}"; do

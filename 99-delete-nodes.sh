@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ./vars.sh
+#source ./vars.sh
 
-multipass delete "${NODES[@]}"
+#multipass delete "${NODES[@]}"
+multipass delete --all
 multipass purge

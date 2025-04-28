@@ -34,37 +34,3 @@ for node in "${NODES[@]}"; do
   " > /dev/null 2>&1
   echo "Installing kubelet, kubeadm and kubectl on $node Done"
 done
-
-echo "Init kubeadm on $MASTER_NODE..."
-multipass exec "$MASTER_NODE" -- bash -c "
-  sudo kubeadm init --pod-network-cidr=10.244.0.0/16
-" > /dev/null 2>&1
-
-echo "Init kubeadm on $MASTER_NODE 10 seconds sleeping..."
-sleep 10
-echo "Init kubeadm on $MASTER_NODE woke up and continued..."
-
-multipass exec "$MASTER_NODE" -- bash -lc "
-  mkdir -p ~/.kube &&
-  sudo cp -i /etc/kubernetes/admin.conf ~/.kube/config &&
-  sudo chown \$(id -u):\$(id -g) ~/.kube/config &&
-  kubectl apply -f https://github.com/flannel-io/flannel/releases/latest/download/kube-flannel.yml
-" > /dev/null 2>&1
-
-echo "Init kubeadm on $MASTER_NODE Done"
-
-JOIN_COMMAND=$(multipass exec "$MASTER_NODE" -- bash -lc "kubeadm token create --print-join-command")
-
-for node in "${WORKER_NODES[@]}"; do
-  echo "Joining node $node into cluster..."
-
-  USER_HOME=$(multipass exec "$node" -- bash -c "echo \$HOME")
-  multipass exec "$node" -- bash -c "
-    sudo ${JOIN_COMMAND} &&
-    mkdir -p ${USER_HOME}/.kube &&
-    sudo cp /etc/kubernetes/admin.conf ${USER_HOME}/.kube/config &&
-    sudo chown \$(id -u):\$(id -g) ${USER_HOME}/.kube/config
-  " > /dev/null 2>&1
-
-  echo "Joining node $node into cluster Done"
-done
