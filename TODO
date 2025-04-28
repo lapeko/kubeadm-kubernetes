@@ -1,0 +1,22 @@
+# Move cluster initialization to file 04-init-cluster.sh and update Makefile
+# Fix
+    ubuntu@worker2:~$ kubectl get pods
+    E0428 02:35:03.691188    4600 memcache.go:265] "Unhandled Error" err="couldn't get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"
+    The connection to the server localhost:8080 was refused - did you specify the right host or port?
+# Add alias "k" and update vimrc
+# Add logging
+    Example:
+        LOG_FILE="./setup.log"
+
+        for node in "${NODES[@]}"; do
+          echo "Setting up $node..." | tee -a "$LOG_FILE"
+
+          multipass exec "$node" -- bash -c "
+            sudo apt-get update &&
+            sudo apt-get install -y curl
+          " >> "$LOG_FILE" 2>&1
+
+          echo "Setup for $node done!" | tee -a "$LOG_FILE"
+        done
+
+# Make terminal more informative (spinner, status)
