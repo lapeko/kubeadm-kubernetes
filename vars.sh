@@ -1,8 +1,8 @@
 #!/bin/bash
 
-MASTER_NODE=master
+MASTER_NODE=controlplane
 WORKER_NODES=(worker1 worker2)
-NODES=(master "${WORKER_NODES[@]}")
+NODES=("$MASTER_NODE" "${WORKER_NODES[@]}")
 CRI_SOCKET="unix:///run/containerd/containerd.sock"
 CRICRL_DEBUG=false
 KUBEADM_CONF=./kubeadm-config.yaml
