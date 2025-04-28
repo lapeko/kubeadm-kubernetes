@@ -32,7 +32,9 @@ ExecStartPost=/bin/chmod 666 /run/containerd/containerd.sock
 EOF
     sudo systemctl daemon-reload &&
     sudo systemctl restart containerd
-  " > /dev/null 2>&1
+  " > /dev/null 2>&1 &
 
   echo "Setting up containerd on a node $node Done"
 done
+
+wait

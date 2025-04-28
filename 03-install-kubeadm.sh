@@ -31,6 +31,8 @@ for node in "${NODES[@]}"; do
     sudo apt-get install -y kubelet kubeadm kubectl &&
     sudo apt-mark hold kubelet kubeadm kubectl &&
     sudo systemctl enable --now kubelet
-  " > /dev/null 2>&1
+  " > /dev/null 2>&1 &
   echo "Installing kubelet, kubeadm and kubectl on $node Done"
 done
+
+wait

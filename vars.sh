@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MASTER_NODE=master
-WORKER_NODES=()
+WORKER_NODES=(worker1 worker2)
 NODES=(master "${WORKER_NODES[@]}")
 CRI_SOCKET="unix:///run/containerd/containerd.sock"
 CRICRL_DEBUG=false

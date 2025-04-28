@@ -18,6 +18,8 @@ JOIN_COMMAND=$(multipass exec "$MASTER_NODE" -- bash -lc "kubeadm token create -
 
 for node in "${WORKER_NODES[@]}"; do
   echo "Joining node $node into cluster..."
-  multipass exec "$node" -- bash -c "sudo ${JOIN_COMMAND}" > /dev/null 2>&1
+  multipass exec "$node" -- bash -c "sudo ${JOIN_COMMAND}" > /dev/null 2>&1 &
   echo "Joining node $node into cluster Done"
 done
+
+wait
