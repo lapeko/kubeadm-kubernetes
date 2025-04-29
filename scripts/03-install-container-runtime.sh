@@ -22,7 +22,8 @@ for NODE in "${NODES[@]}"; do
     sudo mkdir -p /etc/containerd &&
     containerd config default | \
       sed 's/SystemdCgroup = false/SystemdCgroup = true/' | \
-      sudo tee /etc/containerd/config.toml
+      sudo tee /etc/containerd/config.toml &&
+    sudo systemctl restart containerd
   " > /dev/null &
 done
 
