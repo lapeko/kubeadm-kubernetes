@@ -17,6 +17,14 @@ wait
 echo "Install containerd Done"
 
 for NODE in "${NODES[@]}"; do
+  echo "Setup IPv4 forwarding on $NODE"
+  vagrant ssh "$NODE" -c "echo 'net.ipv4.ip_forward=1' | sudo tee /etc/sysctl.d/k8s.conf && sudo sysctl -w net.ipv4.ip_forward=1" > /dev/null &
+done
+
+wait
+echo "Setup IPv4 forwarding Done"
+
+for NODE in "${NODES[@]}"; do
   echo "Configuring the systemd cgroup driver on $NODE"
   vagrant ssh "$NODE" -c "
     sudo mkdir -p /etc/containerd &&
