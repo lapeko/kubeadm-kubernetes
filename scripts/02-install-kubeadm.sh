@@ -38,7 +38,7 @@ for NODE in "${NODES[@]}"; do
     sudo apt-get update &&
     sudo apt-get install -y kubelet kubeadm kubectl &&
     sudo apt-mark hold kubelet kubeadm kubectl
-  " > /dev/null &
+  " > /dev/null 2>&1 &
 done
 
 wait
