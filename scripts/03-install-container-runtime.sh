@@ -8,10 +8,23 @@ cd "$VAGRANT_PATH" || exit 1
 for NODE in "${NODES[@]}"; do
   echo "Install containerd on $NODE"
   vagrant ssh "$NODE" -c "
-    sudo apt update
-    sudo apt install -y containerd
-  " > /dev/null &
+    sudo apt-get update
+    sudo apt-get install -y containerd
+  " > /dev/null 2>&1 &
 done
 
 wait
 echo "Install containerd Done"
+
+for NODE in "${NODES[@]}"; do
+  echo "Configuring the systemd cgroup driver on $NODE"
+  vagrant ssh "$NODE" -c "
+    sudo mkdir -p /etc/containerd &&
+    containerd config default | \
+      sed 's/SystemdCgroup = false/SystemdCgroup = true/' | \
+      sudo tee /etc/containerd/config.toml
+  " > /dev/null &
+done
+
+wait
+echo "Configuring the systemd cgroup driver Done"
