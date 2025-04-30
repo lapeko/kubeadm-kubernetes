@@ -8,9 +8,9 @@ cd "$VAGRANT_PATH" || exit 1
 JOIN_CMD=$(vagrant ssh controlplane -c "kubeadm token create --print-join-command" | tr -d '\r')
 
 for NODE in "${WORKER_NODES[@]}"; do
-  echo "Node $NODE joining the cluster"
+  echo "Node $NODE joining ${MASTER_NODE}..."
   vagrant ssh "$NODE" -c "sudo $JOIN_CMD" > /dev/null &
 done
 
 wait
-echo "Nodes joined the cluster: ${WORKER_NODES[*]}"
+echo "Nodes ${WORKER_NODES[*]} joined ${MASTER_NODE}"
