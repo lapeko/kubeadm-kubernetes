@@ -1,4 +1,4 @@
-.PHONY: up recreate run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s suspend_nodes clean_up_nodes
+.PHONY: up recreate run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s turn_off_nodes suspend_nodes clean_up_nodes
 
 up: run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s
 recreate: clean_up_nodes up
@@ -18,6 +18,8 @@ install_cni:
 workers_join_k8s:
 	$(SCRIPTS_PATH)/06-workers-join-k8s.sh
 
+turn_off_nodes:
+	$(SCRIPTS_PATH)/97-turn-off-nodes.sh
 suspend_nodes:
 	$(SCRIPTS_PATH)/98-suspend-nodes.sh
 clean_up_nodes:
