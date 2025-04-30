@@ -1,6 +1,6 @@
-.PHONY: up recreate run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s turn_off_nodes suspend_nodes clean_up_nodes
+.PHONY: up recreate run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s set_kubeadm_context_var turn_off_nodes suspend_nodes clean_up_nodes
 
-up: run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s
+up: run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s set_kubeadm_context_var
 recreate: clean_up_nodes up
 
 SCRIPTS_PATH=./scripts
@@ -17,6 +17,8 @@ install_cni:
 	$(SCRIPTS_PATH)/05-install-cni.sh
 workers_join_k8s:
 	$(SCRIPTS_PATH)/06-workers-join-k8s.sh
+set_kubeadm_context_var:
+	$(SCRIPTS_PATH)/07-set-kubeadm-context-var.sh
 
 turn_off_nodes:
 	$(SCRIPTS_PATH)/97-turn-off-nodes.sh
