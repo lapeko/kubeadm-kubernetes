@@ -16,5 +16,3 @@ vagrant ssh "$MASTER_NODE" -c "
   sudo chown \$(id -u):\$(id -g) \$HOME/.kube/config
 " > /dev/null
 echo "initialize kubeadm on $MASTER_NODE Done"
-
-
