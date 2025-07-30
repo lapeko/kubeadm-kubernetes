@@ -1,6 +1,6 @@
 .PHONY: \
 	up recreate resume \
-	stop_kvm run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s set_kubeadm_context_var \
+	stop_kvm run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s set_kubeadm_context_var install_latest_helm\
 	turn_off_nodes suspend_nodes clean_up_nodes
 
 up: stop_kvm run_nodes install_kubeadm install_container_runtime init_kubeadm install_cni workers_join_k8s set_kubeadm_context_var
@@ -25,6 +25,8 @@ workers_join_k8s:
 	$(SCRIPTS_PATH)/07-workers-join-k8s.sh
 set_kubeadm_context_var:
 	$(SCRIPTS_PATH)/08-set-kubeadm-context-var.sh
+install_latest_helm:
+	$(SCRIPTS_PATH)/09-install-latest-helm.sh
 
 turn_off_nodes:
 	$(SCRIPTS_PATH)/97-turn-off-nodes.sh
